@@ -1,0 +1,23 @@
+{
+  "id": "openclaw-sec",
+  "name": "@openclaw/sec",
+  "version": "0.2.0",
+  "description": "Security middleware — outbound content scanning, chain analysis, and audit logging",
+  "entry": "./dist/plugin.js",
+  "hooks": [
+    "message:sent",
+    "message:preprocessed",
+    "tool_result_persist",
+    "command",
+    "message"
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "sec": {
+        "type": "object",
+        "description": "Security plugin configuration"
+      }
+    }
+  }
+}

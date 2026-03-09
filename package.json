@@ -1,0 +1,49 @@
+{
+  "name": "@openclaw/sec",
+  "version": "0.3.0",
+  "description": "AI Agent Security Gateway for OpenClaw — prompt injection defense, content scanning, encoding bypass protection, sensitive path guard, chain analysis, rate limiting, circuit breaker, LLM judge, and audit logging",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./plugin": "./dist/plugin.js"
+  },
+  "files": [
+    "dist",
+    "hook",
+    "openclaw.plugin.json",
+    "security.config.example.yaml"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "openclaw",
+    "nanoclaw",
+    "security",
+    "ai-agent",
+    "audit-log",
+    "content-scanning",
+    "pii-detection",
+    "secret-detection"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.13.0",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

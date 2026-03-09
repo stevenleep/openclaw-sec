@@ -1,0 +1,69 @@
+# @openclaw/sec Configuration (v0.3)
+# Copy to security.config.yaml and customize as needed.
+
+# Content scanner settings
+scanner:
+  # Disable specific built-in patterns by ID
+  # disabledPatterns:
+  #   - email-address
+  #   - phone-number
+
+  # Add custom detection patterns
+  # extraPatterns:
+  #   - id: my-internal-token
+  #     label: "Internal Service Token"
+  #     type: secret
+  #     pattern: "myapp_[A-Za-z0-9]{32}"
+  #     flags: "g"
+
+  # Values to exclude from detection (exact match)
+  # allowlist:
+  #   - "sk-test-not-a-real-key"
+
+  # Enable/disable sub-scanners (all true by default)
+  enableEncodingDefense: true     # Decode Base64/URL/Hex before scanning
+  enableEntropyDetection: true    # Detect high-entropy random strings
+  enablePromptInjection: true     # Detect prompt injection attacks
+
+# Chain analysis settings
+chain:
+  windowMs: 120000      # Analysis window (2 minutes)
+  maxWindowSize: 100    # Max events to track per session
+
+  # Custom threat patterns
+  # customThreats:
+  #   - pattern: custom-exfil
+  #     description: "Custom exfiltration pattern"
+  #     sequence: ["fs.read", "shell.exec"]
+  #     severity: high
+
+# Guard: rate limiting & circuit breaker
+guard:
+  rateLimit:
+    maxPerMinute: 60
+    maxPerHour: 600
+  circuitBreaker:
+    failureThreshold: 5    # Trip after N security violations
+    resetTimeMs: 300000     # Reset after 5 minutes
+
+# LLM Judge (optional — only for high/critical chain threats)
+# Uncomment to enable AI-powered security review
+# llmJudge:
+#   provider: openai
+#   model: gpt-4o-mini
+#   timeout: 10000
+
+# Audit log settings
+audit:
+  adapter: local
+  path: ./logs/openclaw-sec-audit.jsonl
+
+# Action policies — what happens when a security check triggers
+actions:
+  onSecretDetected: redact       # redact | block | warn
+  onChainThreat: warn            # log | block | warn
+  onLLMUnsafe: warn              # block | warn
+  onPromptInjection: warn        # log | block | warn
+  onSensitivePath: warn          # log | block | warn
+  onDangerousCommand: warn       # log | block | warn
+  onRateLimitExceeded: warn      # log | block | warn
